@@ -3,5 +3,7 @@
   "name": "Minimal Dev Container",
   "build": {
     "dockerfile": "Dockerfile"
-  }
+  },
+  "runArgs": ["--privileged"],
+  "mounts": ["source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"]
 }
