@@ -6,9 +6,6 @@ RUN apt-get update && \
     apt-get install -y docker.io jq && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-ARG USERNAME=vscode
-RUN groupadd -f docker && usermod -aG docker $USERNAME
-
 # Copy MCP startup script and config file, set permissions
 COPY start-mcp-servers.sh /usr/local/bin/start-mcp-servers.sh
 COPY mcp.json /usr/local/bin/mcp.json

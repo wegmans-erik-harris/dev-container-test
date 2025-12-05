@@ -2,14 +2,11 @@
 {
   "name": "Minimal Dev Container",
   "build": {
-    "dockerfile": "Dockerfile",
-    "args": {
-      "USERNAME": "vscode"
-    }
+    "dockerfile": "Dockerfile"
   },
   "runArgs": ["--privileged"],
   "mounts": ["source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"],
   "postStartCommand": "/usr/local/bin/start-mcp-servers.sh",
   "containerEnv": {},
-  "remoteUser": "vscode"
+  "remoteUser": "root"
 }
