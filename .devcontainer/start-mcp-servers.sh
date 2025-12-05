@@ -40,3 +40,4 @@ done
 echo "]" >> $MCP_SERVERS_FILE
 
 echo "MCP servers started and info written to $MCP_SERVERS_FILE"
+
