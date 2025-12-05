@@ -1,0 +1,7 @@
+// .devcontainer/devcontainer.json
+{
+  "name": "Minimal Dev Container",
+  "build": {
+    "dockerfile": "Dockerfile"
+  }
+}
