@@ -1,17 +1,18 @@
 // .devcontainer/devcontainer.json
 {
   "name": "Minimal Dev Container",
-  "build": {
-    "dockerfile": "Dockerfile"
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/git:1": {}
   },
   "runArgs": ["--privileged"],
   "mounts": ["source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"],
+  "postCreateCommand": "apt-get update && apt-get install -y jq dos2unix && cp /workspaces/repo-configuration/.devcontainer/start-mcp-servers.sh /usr/local/bin/start-mcp-servers.sh && cp /workspaces/repo-configuration/.devcontainer/mcp.json /usr/local/bin/mcp.json && cp /workspaces/repo-configuration/.devcontainer/docker-troubleshoot.sh /usr/local/bin/docker-troubleshoot.sh && cp /workspaces/repo-configuration/.devcontainer/test-mcp-setup.sh /usr/local/bin/test-mcp-setup.sh && chmod +x /usr/local/bin/*.sh && dos2unix /usr/local/bin/mcp.json",
   "postStartCommand": "sudo /usr/local/bin/start-mcp-servers.sh",
   "containerEnv": {
-    "MCP_CONFIG_PATH": "/workspace/.devcontainer/mcp.json"
+    "MCP_CONFIG_PATH": "/workspaces/repo-configuration/.devcontainer/mcp.json"
   },
-  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
-  "workspaceFolder": "/workspace",
   "customizations": {
     "jetbrains": {
       "plugins": [
