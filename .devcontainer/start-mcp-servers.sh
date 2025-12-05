@@ -1,10 +1,9 @@
 #!/bin/bash
-# Start required MCP servers from .devcontainer/mcp.json and write their info to .mcp_servers.json
+# Start required MCP servers from /usr/local/bin/mcp.json
 
 set -e
 
-MCP_CONFIG_FILE=".devcontainer/mcp.json"
-MCP_SERVERS_FILE="/workspace/.mcp_servers.json"
+MCP_CONFIG_FILE="/usr/local/bin/mcp.json"
 
 if [ ! -f "$MCP_CONFIG_FILE" ]; then
   echo "MCP config file not found: $MCP_CONFIG_FILE"
@@ -12,8 +11,6 @@ if [ ! -f "$MCP_CONFIG_FILE" ]; then
 fi
 
 # Parse and start local docker MCP servers
-echo "[" > $MCP_SERVERS_FILE
-FIRST=1
 for SERVER in $(jq -c '.servers | to_entries[]' "$MCP_CONFIG_FILE"); do
   NAME=$(echo $SERVER | jq -r '.key')
   TYPE=$(echo $SERVER | jq -r '.value.type')
@@ -26,18 +23,11 @@ for SERVER in $(jq -c '.servers | to_entries[]' "$MCP_CONFIG_FILE"); do
       ARGS_ARRAY+=("$ARG")
     done
     docker run -d --name "$NAME" "${ARGS_ARRAY[@]:3}"
-    # Write info to JSON file
-    if [ $FIRST -eq 0 ]; then
-      echo "," >> $MCP_SERVERS_FILE
-    fi
-    echo "  {\"name\": \"$NAME\", \"type\": \"docker\", \"address\": \"container://$NAME\"}" >> $MCP_SERVERS_FILE
-    FIRST=0
+    echo "Started docker MCP server: $NAME"
   fi
   # Other types can be handled or logged here
   # For now, just skip
   # TODO: Add support for stdio, remote, etc.
 done
-echo "]" >> $MCP_SERVERS_FILE
 
-echo "MCP servers started and info written to $MCP_SERVERS_FILE"
-
+echo "MCP server startup complete."
