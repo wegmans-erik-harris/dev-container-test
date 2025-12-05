@@ -5,6 +5,5 @@
     "dockerfile": "Dockerfile"
   },
   "runArgs": ["--privileged"],
-  "mounts": ["source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"],
-  "postStartCommand": "docker run -d --name terraform-mcp-server hashicorp/terraform-mcp-server"
+  "mounts": ["source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"]
 }
