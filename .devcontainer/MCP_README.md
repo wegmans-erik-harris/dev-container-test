@@ -3,20 +3,8 @@
 When this devcontainer starts, it automatically launches required MCP servers (e.g., Terraform MCP server) in Docker as defined in `/usr/local/bin/mcp.json`.
 
 ## For AI Assistants and Agents
-- Discover available MCP servers by reading the JSON file at `/usr/local/bin/mcp.json`.
-- This file follows the standard MCP server configuration format:
-  ```json
-  {
-    "servers": {
-      "terraform-mcp-server": {
-        "type": "local",
-        "command": "docker",
-        "args": ["run", "-i", "--rm", "hashicorp/terraform-mcp-server"]
-      }
-    }
-  }
-  ```
-  *Note: JSON does not support comments. To add more servers, add new entries to the "servers" object as shown above*
+- AI assistants can discover available MCP servers by reading `/workspace/.devcontainer/mcp.json` and using the `address` field for each server.
+- For Docker-based MCP servers, ensure the port is published and the address is reachable from the devcontainer.
 - The AI assistant can use this file directly for MCP server discovery and configuration.
 
 ## For Users

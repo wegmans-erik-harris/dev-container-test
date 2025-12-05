@@ -1,0 +1,35 @@
+{
+  "agents": {
+    "terraform-helper": {
+      "name": "Terraform Helper",
+      "description": "An expert Terraform assistant with access to the Terraform MCP server for infrastructure analysis and planning",
+      "tools": [
+        {
+          "type": "mcp",
+          "server": "terraform-mcp-server"
+        }
+      ],
+      "instructions": "You are an expert Terraform assistant. Use the Terraform MCP server to analyze configurations, validate plans, and provide infrastructure recommendations. Always check for best practices and security considerations."
+    },
+    "devops-assistant": {
+      "name": "DevOps Assistant",
+      "description": "A comprehensive DevOps helper with access to Azure DevOps, Azure, and GitHub MCP servers",
+      "tools": [
+        {
+          "type": "mcp",
+          "server": "ado-mcp-server"
+        },
+        {
+          "type": "mcp",
+          "server": "azure-mcp-server"
+        },
+        {
+          "type": "mcp",
+          "server": "github-mcp-server"
+        }
+      ],
+      "instructions": "You are a DevOps expert with access to Azure DevOps, Azure, and GitHub. Help users with CI/CD pipelines, cloud infrastructure, and repository management. Use the appropriate MCP server based on the user's needs."
+    }
+  }
+}
+

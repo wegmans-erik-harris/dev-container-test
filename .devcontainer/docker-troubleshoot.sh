@@ -28,5 +28,11 @@ docker run --rm hello-world || echo "Cannot run Docker container (likely permiss
 echo "===== Environment Variables ====="
 printenv | grep -E 'USER|USERNAME|HOME|PATH'
 
+echo "===== MCP JSON File Content ====="
+cat /usr/local/bin/mcp.json || echo "/usr/local/bin/mcp.json not found or unreadable"
+
+echo "===== jq Parse Test ====="
+jq . /usr/local/bin/mcp.json || echo "jq failed to parse /usr/local/bin/mcp.json"
+
 echo "===== End of Troubleshooting ====="
 

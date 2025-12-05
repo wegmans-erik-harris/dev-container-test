@@ -10,24 +10,26 @@ if [ ! -f "$MCP_CONFIG_FILE" ]; then
   exit 1
 fi
 
-# Parse and start local docker MCP servers
-for SERVER in $(jq -c '.servers | to_entries[]' "$MCP_CONFIG_FILE"); do
-  NAME=$(echo $SERVER | jq -r '.key')
-  TYPE=$(echo $SERVER | jq -r '.value.type')
-  CMD=$(echo $SERVER | jq -r '.value.command')
-  ARGS=$(echo $SERVER | jq -c '.value.args')
-  if [ "$TYPE" = "local" ] && [ "$CMD" = "docker" ]; then
-    # Convert ARGS from JSON array to bash array
+jq -c '.servers | to_entries[]' "$MCP_CONFIG_FILE" | while read -r SERVER; do
+  NAME=$(echo "$SERVER" | jq -r '.key')
+  TYPE=$(echo "$SERVER" | jq -r '.value.type // empty')
+  CMD=$(echo "$SERVER" | jq -r '.value.command // empty')
+  ARGS=$(echo "$SERVER" | jq -c '.value.args // []')
+  if [ "$TYPE" = "local" ] && [ -n "$CMD" ]; then
     ARGS_ARRAY=()
-    for ARG in $(echo $ARGS | jq -r '.[]'); do
+    for ARG in $(echo "$ARGS" | jq -r '.[]'); do
       ARGS_ARRAY+=("$ARG")
     done
-    docker run -d --name "$NAME" "${ARGS_ARRAY[@]:3}"
-    echo "Started docker MCP server: $NAME"
+    echo "Executing: $CMD ${ARGS_ARRAY[*]}"
+    "$CMD" "${ARGS_ARRAY[@]}"
+    # Diagnostic: check container status
+    sleep 2
+    docker ps -a
+    docker logs "$NAME" || true
+    echo "Started MCP server: $NAME"
+  else
+    echo "Skipping MCP server: $NAME (type: $TYPE, command: $CMD)"
   fi
-  # Other types can be handled or logged here
-  # For now, just skip
-  # TODO: Add support for stdio, remote, etc.
 done
 
 echo "MCP server startup complete."

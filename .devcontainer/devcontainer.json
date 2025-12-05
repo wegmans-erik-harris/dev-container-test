@@ -6,7 +6,22 @@
   },
   "runArgs": ["--privileged"],
   "mounts": ["source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"],
-  "postStartCommand": "/usr/local/bin/start-mcp-servers.sh",
-  "containerEnv": {},
-  "remoteUser": "root"
+  "postStartCommand": "sudo /usr/local/bin/start-mcp-servers.sh",
+  "containerEnv": {
+    "MCP_CONFIG_PATH": "/workspace/.devcontainer/mcp.json"
+  },
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+  "workspaceFolder": "/workspace",
+  "customizations": {
+    "jetbrains": {
+      "plugins": [
+        "github-copilot"
+      ]
+    },
+    "vscode": {
+      "extensions": [
+        "GitHub.copilot"
+      ]
+    }
+  }
 }
