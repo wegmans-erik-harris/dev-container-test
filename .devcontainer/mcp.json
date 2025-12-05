@@ -1,0 +1,29 @@
+{
+    "servers": {
+        "terraform-mcp-server": {
+            "type": "local",
+            "command": "docker",
+            "args": ["run", "-i", "--rm", "hashicorp/terraform-mcp-server"]
+        },
+        "ado-mcp-server": {
+            "type": "stdio",
+            "command": "npx",
+            "args": ["-y", "@azure-devops/mcp@next", "wegmans"]
+        },
+        "azure-mcp-server": {
+            "type": "local",
+            "command": "npx",
+            "args": ["-y", "@azure/mcp@latest", "server", "start"]
+        },
+        "github-mcp-server": {
+            "type": "remote",
+            "url": "https://api.githubcopilot.com/mcp/",
+            "requestInit": {
+                "headers": {
+                    "Authorization": "Bearer {{GITHUB_MCP_TOKEN}}"
+                }
+            }
+        }
+    }
+}
+

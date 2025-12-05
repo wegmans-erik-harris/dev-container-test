@@ -5,5 +5,9 @@
     "dockerfile": "Dockerfile"
   },
   "runArgs": ["--privileged"],
-  "mounts": ["source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"]
+  "mounts": ["source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"],
+  "postStartCommand": "/bin/bash .devcontainer/start-mcp-servers.sh",
+  "containerEnv": {
+    "MCP_SERVERS": "/workspace/.mcp_servers.json"
+  }
 }
