@@ -10,10 +10,8 @@ RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - && \
     apt-get install -y nodejs && \
     npm install -g npm
 
-# Install GitHub Copilot CLI globally and symlink to /usr/local/bin
+# Install GitHub Copilot CLI globally
 RUN npm install -g @githubnext/github-copilot-cli && \
-    mkdir -p /usr/local/bin && \
-    ln -sf $(npm bin -g)/copilot /usr/local/bin/copilot && \
     copilot --version
 
 # Note: Scripts will be copied from the cloned workspace via postCreateCommand
