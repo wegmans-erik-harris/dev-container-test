@@ -12,6 +12,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - && \
 
 # Install GitHub Copilot CLI globally and symlink to /usr/local/bin
 RUN npm install -g @githubnext/github-copilot-cli && \
+    mkdir -p /usr/local/bin && \
     ln -sf $(npm bin -g)/copilot /usr/local/bin/copilot && \
     copilot --version
 
