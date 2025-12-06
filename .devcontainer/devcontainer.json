@@ -9,7 +9,7 @@
     "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {}
   },
   "mounts": ["source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"],
-  "onCreateCommand": "bash -c 'echo \"Verifying clone:\"; git log --oneline -5; echo \"All files in .devcontainer:\"; ls -la .devcontainer/'",
+  "onCreateCommand": "bash -c 'echo \"=== GIT INFO ===\"; git remote -v; git branch -a; echo \"Current commit:\"; git log -1 --oneline; echo \"Latest 5 commits:\"; git log --oneline -5; echo \"Files in .devcontainer:\"; ls -la .devcontainer/; echo \"Fetching latest from origin...\"; git fetch origin; git checkout origin/master; echo \"After checkout:\"; git log -1 --oneline; ls -la .devcontainer/'",
   "postCreateCommand": "bash -c 'echo \"Setting up MCP scripts...\"; WS=$(pwd); echo \"Workspace: $WS\"; echo \"Listing workspace:\"; ls -la; echo \"Checking for .devcontainer:\"; ls -la .devcontainer/ || (echo \"ERROR: .devcontainer not found\" && exit 1); sudo cp .devcontainer/start-mcp-servers.sh /usr/local/bin/start-mcp-servers.sh && sudo cp .devcontainer/mcp.json /usr/local/bin/mcp.json && sudo cp .devcontainer/docker-troubleshoot.sh /usr/local/bin/docker-troubleshoot.sh && sudo cp .devcontainer/test-mcp-setup.sh /usr/local/bin/test-mcp-setup.sh && sudo chmod +x /usr/local/bin/*.sh && sudo dos2unix /usr/local/bin/mcp.json && echo \"Setup complete!\"'",
   "postStartCommand": "sudo /usr/local/bin/start-mcp-servers.sh",
   "containerEnv": {
