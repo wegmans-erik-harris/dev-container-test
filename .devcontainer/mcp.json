@@ -3,7 +3,7 @@
         "terraform-mcp-server": {
             "type": "local",
             "command": "docker",
-            "args": ["run", "-di", "-rm", "--name", "terraform-mcp-server", "-p", "8080:8080", "hashicorp/terraform-mcp-server"],
+            "args": ["run", "-di", "--rm", "--name", "terraform-mcp-server", "-p", "8080:8080", "hashicorp/terraform-mcp-server"],
             "address": "http://localhost:8080"
         },
         "ado-mcp-server": {
