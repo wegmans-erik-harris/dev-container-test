@@ -12,21 +12,9 @@
     }
   },
   "mounts": ["source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"],
-  "postCreateCommand": "bash -c 'echo \"Setting up MCP scripts...\"; pwd; ls -l .devcontainer; echo \"Contents of .devcontainer/mcp.json before copy:\"; cat .devcontainer/mcp.json; sudo cp .devcontainer/start-mcp-servers.sh /usr/local/bin/start-mcp-servers.sh && sudo cp .devcontainer/mcp.json /usr/local/bin/mcp.json && sudo cp .devcontainer/docker-troubleshoot.sh /usr/local/bin/docker-troubleshoot.sh && sudo cp .devcontainer/test-mcp-setup.sh /usr/local/bin/test-mcp-setup.sh && sudo chmod +x /usr/local/bin/*.sh && sudo dos2unix /usr/local/bin/mcp.json; echo \"Contents of /usr/local/bin/mcp.json after copy:\"; cat /usr/local/bin/mcp.json; echo \"Setup complete!\"'",
-  "postStartCommand": "sudo /usr/local/bin/start-mcp-servers.sh",
+  "postCreateCommand": "bash -c 'echo \"Setting up MCP scripts...\"; pwd; ls -l .devcontainer; echo \"Contents of .devcontainer/mcp.json before copy:\"; cat .devcontainer/mcp.json; sudo cp .devcontainer/start-mcp-servers.sh /usr/local/bin/start-mcp-servers.sh && sudo cp .devcontainer/mcp.json /usr/local/bin/mcp.json && sudo cp .devcontainer/docker-troubleshoot.sh /usr/local/bin/docker-troubleshoot.sh && sudo cp .devcontainer/test-mcp-setup.sh /usr/local/bin/test-mcp-setup.sh && sudo chmod +x /usr/local/bin/*.sh && sudo dos2unix /usr/local/bin/mcp.json; echo \"Contents of /usr/local/bin/mcp.json after copy:\"; cat /usr/local/bin/mcp.json; echo \"Installing GitHub Copilot CLI...\"; npm install -g @githubnext/github-copilot-cli; echo \"Copilot CLI version:\"; copilot --version; echo \"Setup complete!\"'",
+  "postStartCommand": "/usr/local/bin/start-mcp-servers.sh",
   "containerEnv": {
     "MCP_CONFIG_PATH": "/usr/local/bin/mcp.json"
-  },
-  "customizations": {
-    "jetbrains": {
-      "plugins": [
-        "github-copilot"
-      ]
-    },
-    "vscode": {
-      "extensions": [
-        "GitHub.copilot"
-      ]
-    }
   }
 }
