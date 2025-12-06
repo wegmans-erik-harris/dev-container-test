@@ -1,16 +1,18 @@
 // .devcontainer/devcontainer.json
 {
   "name": "Minimal Dev Container",
-  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
   "features": {
     "ghcr.io/devcontainers/features/git:1": {},
     "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {}
   },
   "mounts": ["source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"],
-  "postCreateCommand": "apt-get update && apt-get install -y jq dos2unix && cp /workspaces/repo-configuration/.devcontainer/start-mcp-servers.sh /usr/local/bin/start-mcp-servers.sh && cp /workspaces/repo-configuration/.devcontainer/mcp.json /usr/local/bin/mcp.json && cp /workspaces/repo-configuration/.devcontainer/docker-troubleshoot.sh /usr/local/bin/docker-troubleshoot.sh && cp /workspaces/repo-configuration/.devcontainer/test-mcp-setup.sh /usr/local/bin/test-mcp-setup.sh && chmod +x /usr/local/bin/*.sh && dos2unix /usr/local/bin/mcp.json",
+  "postCreateCommand": "sudo cp ${containerWorkspaceFolder}/.devcontainer/start-mcp-servers.sh /usr/local/bin/start-mcp-servers.sh && sudo cp ${containerWorkspaceFolder}/.devcontainer/mcp.json /usr/local/bin/mcp.json && sudo cp ${containerWorkspaceFolder}/.devcontainer/docker-troubleshoot.sh /usr/local/bin/docker-troubleshoot.sh && sudo cp ${containerWorkspaceFolder}/.devcontainer/test-mcp-setup.sh /usr/local/bin/test-mcp-setup.sh && sudo chmod +x /usr/local/bin/*.sh && sudo dos2unix /usr/local/bin/mcp.json",
   "postStartCommand": "sudo /usr/local/bin/start-mcp-servers.sh",
   "containerEnv": {
-    "MCP_CONFIG_PATH": "/workspaces/repo-configuration/.devcontainer/mcp.json"
+    "MCP_CONFIG_PATH": "${containerWorkspaceFolder}/.devcontainer/mcp.json"
   },
   "customizations": {
     "jetbrains": {
