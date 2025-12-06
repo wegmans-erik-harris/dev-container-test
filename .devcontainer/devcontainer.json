@@ -9,10 +9,10 @@
     "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {}
   },
   "mounts": ["source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"],
-  "postCreateCommand": "sudo cp ${containerWorkspaceFolder}/.devcontainer/start-mcp-servers.sh /usr/local/bin/start-mcp-servers.sh && sudo cp ${containerWorkspaceFolder}/.devcontainer/mcp.json /usr/local/bin/mcp.json && sudo cp ${containerWorkspaceFolder}/.devcontainer/docker-troubleshoot.sh /usr/local/bin/docker-troubleshoot.sh && sudo cp ${containerWorkspaceFolder}/.devcontainer/test-mcp-setup.sh /usr/local/bin/test-mcp-setup.sh && sudo chmod +x /usr/local/bin/*.sh && sudo dos2unix /usr/local/bin/mcp.json",
+  "postCreateCommand": "bash .devcontainer/post-create.sh",
   "postStartCommand": "sudo /usr/local/bin/start-mcp-servers.sh",
   "containerEnv": {
-    "MCP_CONFIG_PATH": "${containerWorkspaceFolder}/.devcontainer/mcp.json"
+    "MCP_CONFIG_PATH": "/usr/local/bin/mcp.json"
   },
   "customizations": {
     "jetbrains": {
