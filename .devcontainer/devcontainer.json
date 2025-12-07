@@ -9,9 +9,8 @@
     "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {}
   },
   "mounts": ["source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"],
-  "postCreateCommand": "bash -c 'echo \"Setting up MCP scripts...\"; pwd; ls -l .devcontainer; echo \"Contents of .devcontainer/mcp.json before copy:\"; cat .devcontainer/mcp.json; sudo cp .devcontainer/start-mcp-servers.sh /usr/local/bin/start-mcp-servers.sh && sudo cp .devcontainer/mcp.json /usr/local/bin/mcp.json && sudo cp .devcontainer/docker-troubleshoot.sh /usr/local/bin/docker-troubleshoot.sh && sudo cp .devcontainer/test-mcp-setup.sh /usr/local/bin/test-mcp-setup.sh && sudo chmod +x /usr/local/bin/*.sh && sudo dos2unix /usr/local/bin/mcp.json; echo \"Contents of /usr/local/bin/mcp.json after copy:\"; cat /usr/local/bin/mcp.json; echo \"Setup complete!\"'",
-  "postStartCommand": "/usr/local/bin/start-mcp-servers.sh",
+  "postCreateCommand": "bash -c 'echo \"Setting up MCP scripts...\"; pwd; ls -l .devcontainer; mkdir -p /usr/local/share/copilot; echo \"Copying MCP config to /usr/local/share/copilot/mcp.json\"; sudo cp .devcontainer/mcp.json /usr/local/share/copilot/mcp.json; echo \"Copying helper scripts\"; sudo cp .devcontainer/copilot-with-mcp.sh /usr/local/bin/copilot-with-mcp.sh && sudo cp .devcontainer/docker-troubleshoot.sh /usr/local/bin/docker-troubleshoot.sh && sudo cp .devcontainer/test-mcp-setup.sh /usr/local/bin/test-mcp-setup.sh && sudo chmod +x /usr/local/bin/*.sh && sudo dos2unix /usr/local/share/copilot/mcp.json; echo \"Contents of /usr/local/share/copilot/mcp.json:\"; cat /usr/local/share/copilot/mcp.json; echo \"Setup complete!\"'",
   "containerEnv": {
-    "MCP_CONFIG_PATH": "/usr/local/bin/mcp.json"
+    "COPILOT_ADDITIONAL_MCP_CONFIG": "/usr/local/share/copilot/mcp.json"
   }
 }
