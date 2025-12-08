@@ -9,5 +9,5 @@
     "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {}
   },
   "mounts": ["source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"],
-  "postCreateCommand": "bash -c 'echo \"Setting up MCP configuration...\"; mkdir -p ~/.copilot && cp .devcontainer/mcp.json ~/.copilot/mcp-config.json && dos2unix ~/.copilot/mcp-config.json; echo \"MCP setup complete!\"'"
+  "postCreateCommand": "bash -c 'echo \"Setting up MCP configuration...\"; mkdir -p $XDG_CONFIG_HOME/.copilot && cp .devcontainer/mcp.json $XDG_CONFIG_HOME/.copilot/mcp-config.json && dos2unix $XDG_CONFIG_HOME/.copilot/mcp-config.json; echo \"MCP setup complete!\"'"
 }
